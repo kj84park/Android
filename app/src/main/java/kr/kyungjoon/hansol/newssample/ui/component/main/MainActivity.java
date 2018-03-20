@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import java.util.List;
 
@@ -13,6 +17,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import kr.kyungjoon.hansol.newssample.R;
 import kr.kyungjoon.hansol.newssample.listener.RecyclerItemListener;
 import kr.kyungjoon.hansol.newssample.network.api.RetroClient;
@@ -38,7 +43,17 @@ public class MainActivity extends Base implements MainView {
     @BindView(R.id.pb_loading)
     ProgressBar progressBar;
 
+    @BindView(R.id.spinner_country)
+    Spinner spinnerCountry;
+
+    @BindView(R.id.spinner_category)
+    Spinner spinnerCategory;
+
+
     List<Articles> articles;
+
+    private String country;
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +65,45 @@ public class MainActivity extends Base implements MainView {
         mainPresenter = new MainPresenter(this);
         Log.d("aa", "aaaaa");
 
+        country = "kr";
+        category = null;
+
+        spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                country = (String)parent.getItemAtPosition(position);
+                getNews();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                country = "kr";
+            }
+        });
+
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category = (String)parent.getItemAtPosition(position);
+                if("Headline".equals(category)){
+                    category = null;
+                }
+                getNews();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                category = null;
+            }
+        });
+
         retro = RetroClient.getInstance(this).createBaseApi();
+
         getNews();
     }
 
-    //@OnClick(R.id.getNews_button)
     void getNews() {
-        retro.getResponse("kr", "04871c167cfb4a3c9c18b9d170d8ba7f", new newsApiCallback() {
+        retro.getResponse(country, category, "04871c167cfb4a3c9c18b9d170d8ba7f", new newsApiCallback() {
             @Override
             public void onError(Throwable t) {
                 Log.d(TAG, "###### onError : ");
@@ -85,7 +132,7 @@ public class MainActivity extends Base implements MainView {
         startActivity(intent);
     };
 
-    void initView(List<Articles> articles){
+    void initView(List<Articles> articles) {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);

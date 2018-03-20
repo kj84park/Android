@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.kyungjoon.hansol.newssample.R;
@@ -17,7 +20,7 @@ import kr.kyungjoon.hansol.newssample.network.dto.Articles;
  * Created by HANSOL on 2018-03-18.
  */
 
-public class MainViewHoler extends RecyclerView.ViewHolder{
+public class MainViewHoler extends RecyclerView.ViewHolder {
 
     @BindView(R.id.tv_caption)
     TextView tvCaption;
@@ -33,12 +36,20 @@ public class MainViewHoler extends RecyclerView.ViewHolder{
     public MainViewHoler(View itemView) {
         super(itemView);
         this.itemView = itemView;
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
     }
 
     public void bind(int position, Articles articles) {
-        tvTitle.setText("["+articles.getSource().getName()+"]"+articles.getTitle());
-        tvCaption.setText(articles.getDescription());
+
+        tvTitle.setText("[" + articles.getSource().getName() + "]" + articles.getTitle());
+
+        if (articles.getDescription() != null && !"Chosun.com".equals(articles.getSource().getName())) {
+            tvCaption.setText(articles.getDescription());
+
+        } else {
+            tvCaption.setText("");
+        }
+
         Glide.with(itemView).load(articles.getUrlToImage()).into(newsImage);
     }
 }

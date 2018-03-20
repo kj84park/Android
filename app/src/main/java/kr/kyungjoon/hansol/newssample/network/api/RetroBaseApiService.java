@@ -14,5 +14,5 @@ public interface RetroBaseApiService {
     public final String BaseUrl = "https://newsapi.org/";
 
    @GET("/v2/top-headlines")
-    Call<GetResponse> getResponse(@Query("country") String country,@Query("apiKey") String apiKey);
+    Call<GetResponse> getResponse(@Query("country") String country,@Query("category") String category,@Query("apiKey") String apiKey);
 }

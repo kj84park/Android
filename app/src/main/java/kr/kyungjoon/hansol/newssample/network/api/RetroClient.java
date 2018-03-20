@@ -49,8 +49,8 @@ public class RetroClient {
         return this;
     }
 
-    public void getResponse(String country,String apikey, final newsApiCallback callback) {
-        apiService.getResponse(country,apikey).enqueue(new Callback<GetResponse>() {
+    public void getResponse(String country,String category,String apikey, final newsApiCallback callback) {
+        apiService.getResponse(country,category,apikey).enqueue(new Callback<GetResponse>() {
             @Override
             public void onResponse(Call<GetResponse> call, Response<GetResponse> response) {
                 if(response.isSuccessful()){
