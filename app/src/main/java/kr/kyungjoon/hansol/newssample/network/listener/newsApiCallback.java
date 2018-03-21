@@ -1,4 +1,4 @@
-package kr.kyungjoon.hansol.newssample.network.api;
+package kr.kyungjoon.hansol.newssample.network.listener;
 
 /**
  * Created by HANSOL on 2018-03-18.

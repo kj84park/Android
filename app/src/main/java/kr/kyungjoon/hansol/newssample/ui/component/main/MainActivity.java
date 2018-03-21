@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
@@ -17,11 +16,10 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import kr.kyungjoon.hansol.newssample.R;
-import kr.kyungjoon.hansol.newssample.listener.RecyclerItemListener;
+import kr.kyungjoon.hansol.newssample.ui.component.listener.RecyclerItemListener;
 import kr.kyungjoon.hansol.newssample.network.api.RetroClient;
-import kr.kyungjoon.hansol.newssample.network.api.newsApiCallback;
+import kr.kyungjoon.hansol.newssample.network.listener.newsApiCallback;
 import kr.kyungjoon.hansol.newssample.network.dto.Articles;
 import kr.kyungjoon.hansol.newssample.network.dto.GetResponse;
 import kr.kyungjoon.hansol.newssample.ui.component.Base;
@@ -30,6 +28,7 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends Base implements MainView {
 
+    public static final String API_KEY = "04871c167cfb4a3c9c18b9d170d8ba7f";
     public final String TAG = MainActivity.class.getName();
 
     @Inject
@@ -63,7 +62,6 @@ public class MainActivity extends Base implements MainView {
 
         getMainComponent().inject(this);
         mainPresenter = new MainPresenter(this);
-        Log.d("aa", "aaaaa");
 
         country = "kr";
         category = null;
@@ -102,8 +100,8 @@ public class MainActivity extends Base implements MainView {
         getNews();
     }
 
-    void getNews() {
-        retro.getResponse(country, category, "04871c167cfb4a3c9c18b9d170d8ba7f", new newsApiCallback() {
+    void getNews() { //model
+        retro.getResponse(country, category, API_KEY, new newsApiCallback() {
             @Override
             public void onError(Throwable t) {
                 Log.d(TAG, "###### onError : ");
@@ -128,12 +126,10 @@ public class MainActivity extends Base implements MainView {
         Articles article =  articles.get(position);
         Intent intent = new Intent(getApplicationContext(), DetailedActivity.class);
         intent.putExtra("article", article);
-
         startActivity(intent);
     };
 
     void initView(List<Articles> articles) {
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);

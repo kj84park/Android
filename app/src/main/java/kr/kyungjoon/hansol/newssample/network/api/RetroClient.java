@@ -3,6 +3,7 @@ package kr.kyungjoon.hansol.newssample.network.api;
 import android.content.Context;
 import android.util.Log;
 import kr.kyungjoon.hansol.newssample.network.dto.GetResponse;
+import kr.kyungjoon.hansol.newssample.network.listener.newsApiCallback;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,13 +15,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetroClient {
-    public final String TAG = RetroClient.class.getName();
+    private final String TAG = RetroClient.class.getName();
 
-    static Context mContext;
-    static RetroBaseApiService apiService;
-    static Retrofit retrofit;
+    private static Context mContext;
+    private static RetroBaseApiService apiService;
+    private static Retrofit retrofit;
 
-    public static String baseUrl = RetroBaseApiService.BaseUrl;
+    private static String baseUrl = RetroBaseApiService.BaseUrl;
 
     private static class SingletonHolder {
         private static RetroClient INSTANCE = new RetroClient(mContext);
@@ -33,7 +34,7 @@ public class RetroClient {
         return SingletonHolder.INSTANCE;
     }
 
-    public  <T> T create(final Class<T> service) {
+    private <T> T create(final Class<T> service) {
         if (service == null) {
             throw new RuntimeException("Api service is null!");
         }
@@ -56,7 +57,6 @@ public class RetroClient {
                 if(response.isSuccessful()){
                     callback.onSuccess(response.code(),response.body());
                 } else {
-
                     Log.d(TAG, "#### error :"+call.request().url().toString());
                     callback.onFailure(response.code());
                 }
@@ -65,10 +65,7 @@ public class RetroClient {
             @Override
             public void onFailure(Call<GetResponse> call, Throwable t) {
                 Log.d(TAG,"#### onFailure : "+t.getMessage());
-                //callback.onError(t);
             }
-
-
         });
     }
 

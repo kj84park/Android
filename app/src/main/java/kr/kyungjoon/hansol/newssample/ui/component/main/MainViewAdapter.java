@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import kr.kyungjoon.hansol.newssample.R;
-import kr.kyungjoon.hansol.newssample.listener.RecyclerItemListener;
+import kr.kyungjoon.hansol.newssample.ui.component.listener.RecyclerItemListener;
 import kr.kyungjoon.hansol.newssample.network.dto.Articles;
 
 /**
@@ -18,11 +18,11 @@ import kr.kyungjoon.hansol.newssample.network.dto.Articles;
 public class MainViewAdapter extends  RecyclerView.Adapter<MainViewHoler>{
 
     public final String TAG = MainViewAdapter.class.getName();
-    RecyclerItemListener recyclerItemListener;
+    private RecyclerItemListener recyclerItemListener;
 
     private final List<Articles> news;
 
-    public MainViewAdapter(List<Articles> news, RecyclerItemListener listener) {
+    MainViewAdapter(List<Articles> news, RecyclerItemListener listener) {
         this.news = news;
         this.recyclerItemListener = listener;
     }
@@ -36,9 +36,7 @@ public class MainViewAdapter extends  RecyclerView.Adapter<MainViewHoler>{
     @Override
     public void onBindViewHolder(MainViewHoler holder, int position) {
         holder.bind(position, news.get(position));
-        holder.itemView.setOnClickListener(v -> {
-        recyclerItemListener.onItemSelected(position);
-        });
+        holder.itemView.setOnClickListener(v -> recyclerItemListener.onItemSelected(position));
     }
 
     @Override
