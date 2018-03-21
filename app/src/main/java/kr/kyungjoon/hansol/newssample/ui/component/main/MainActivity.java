@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
@@ -17,13 +14,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.kyungjoon.hansol.newssample.R;
-import kr.kyungjoon.hansol.newssample.ui.component.listener.RecyclerItemListener;
-import kr.kyungjoon.hansol.newssample.network.api.RetroClient;
-import kr.kyungjoon.hansol.newssample.network.listener.newsApiCallback;
 import kr.kyungjoon.hansol.newssample.network.dto.Articles;
-import kr.kyungjoon.hansol.newssample.network.dto.GetResponse;
 import kr.kyungjoon.hansol.newssample.ui.component.Base;
 import kr.kyungjoon.hansol.newssample.ui.component.details.DetailedActivity;
+import kr.kyungjoon.hansol.newssample.ui.listener.RecyclerItemListener;
 import retrofit2.Retrofit;
 
 public class MainActivity extends Base implements MainView {
@@ -34,7 +28,6 @@ public class MainActivity extends Base implements MainView {
     @Inject
     Retrofit retrofit;
     private MainPresenter mainPresenter;
-    RetroClient retro;
 
     @BindView(R.id.news_list)
     RecyclerView recyclerView;
@@ -43,16 +36,12 @@ public class MainActivity extends Base implements MainView {
     ProgressBar progressBar;
 
     @BindView(R.id.spinner_country)
-    Spinner spinnerCountry;
+    public Spinner spinnerCountry;
 
     @BindView(R.id.spinner_category)
-    Spinner spinnerCategory;
-
+    public Spinner spinnerCategory;
 
     List<Articles> articles;
-
-    private String country;
-    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,64 +51,6 @@ public class MainActivity extends Base implements MainView {
 
         getMainComponent().inject(this);
         mainPresenter = new MainPresenter(this);
-
-        country = "kr";
-        category = null;
-
-        spinnerCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                country = (String)parent.getItemAtPosition(position);
-                getNews();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                country = "kr";
-            }
-        });
-
-        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                category = (String)parent.getItemAtPosition(position);
-                if("Headline".equals(category)){
-                    category = null;
-                }
-                getNews();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                category = null;
-            }
-        });
-
-        retro = RetroClient.getInstance(this).createBaseApi();
-
-        getNews();
-    }
-
-    void getNews() { //model
-        retro.getResponse(country, category, API_KEY, new newsApiCallback() {
-            @Override
-            public void onError(Throwable t) {
-                Log.d(TAG, "###### onError : ");
-            }
-
-            @Override
-            public void onSuccess(int code, Object receivedData) {
-                GetResponse response = (GetResponse) receivedData;
-                initView(response.getArticles());
-                Log.d(TAG, "###### onSuccess : " + code);
-                progressBar.setVisibility(8);
-            }
-
-            @Override
-            public void onFailure(int code) {
-                Log.d(TAG, "###### onFailure : " + code);
-            }
-        });
     }
 
     private final RecyclerItemListener recyclerItemListener = position -> {
@@ -129,7 +60,8 @@ public class MainActivity extends Base implements MainView {
         startActivity(intent);
     };
 
-    void initView(List<Articles> articles) {
+    @Override
+    public void initRecyclerView(List<Articles> articles) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -137,26 +69,19 @@ public class MainActivity extends Base implements MainView {
         this.articles = articles;
     }
 
+    @Override
+    public Spinner getSpinnerCountry() {
+        return spinnerCountry;
+    }
 
-//    public void loadPosts() {
-//
-//        retrofit.create(EventApi.class).getFeeds().subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<List<Event>>() {
-//                    @Override
-//                    public void onCompleted() {
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<Event> data) {
-//
-//                    }
-//                });
-//    }
+    @Override
+    public Spinner getSpinnerCategory() {
+        return spinnerCategory;
+    }
+
+    @Override
+    public void setProgressBarVisibility(int visibility) {
+        progressBar.setVisibility(visibility);
+    }
 }
 

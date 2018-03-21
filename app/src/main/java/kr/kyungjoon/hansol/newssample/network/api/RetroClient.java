@@ -17,20 +17,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetroClient {
     private final String TAG = RetroClient.class.getName();
 
-    private static Context mContext;
     private static RetroBaseApiService apiService;
     private static Retrofit retrofit;
 
     private static String baseUrl = RetroBaseApiService.BaseUrl;
 
     private static class SingletonHolder {
-        private static RetroClient INSTANCE = new RetroClient(mContext);
+        private static RetroClient INSTANCE = new RetroClient();
     }
 
-    public static RetroClient getInstance(Context context) {
-        if (context != null) {
-            mContext = context;
-        }
+    public static RetroClient getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
@@ -41,7 +37,7 @@ public class RetroClient {
         return retrofit.create(service);
     }
 
-    private RetroClient(Context context) {
+    private RetroClient() {
         retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(baseUrl).build();
     }
 

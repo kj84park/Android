@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import kr.kyungjoon.hansol.newssample.R;
-import kr.kyungjoon.hansol.newssample.ui.component.listener.RecyclerItemListener;
+import kr.kyungjoon.hansol.newssample.ui.listener.RecyclerItemListener;
 import kr.kyungjoon.hansol.newssample.network.dto.Articles;
 
 /**

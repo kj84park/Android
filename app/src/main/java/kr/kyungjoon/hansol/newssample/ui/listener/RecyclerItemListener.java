@@ -1,4 +1,4 @@
-package kr.kyungjoon.hansol.newssample.ui.component.listener;
+package kr.kyungjoon.hansol.newssample.ui.listener;
 
 /**
  * Created by HANSOL on 2018-03-19.
