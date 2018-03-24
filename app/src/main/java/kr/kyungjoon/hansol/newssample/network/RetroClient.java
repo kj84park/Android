@@ -1,15 +1,12 @@
-package kr.kyungjoon.hansol.newssample.network.api;
-
-import android.util.Log;
+package kr.kyungjoon.hansol.newssample.network;
 
 import dagger.Module;
-import kr.kyungjoon.hansol.newssample.network.dto.GetResponse;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import kr.kyungjoon.hansol.newssample.network.api.RetroBaseApiService;
 import kr.kyungjoon.hansol.newssample.network.listener.newsApiCallback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -37,7 +34,7 @@ public class RetroClient {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor( chain -> {
                     Request original = chain.request();
-                    // Customize the request
+
                     Request request = original.newBuilder()
                             .header("Content-Type", "application/json")
                             .removeHeader("Pragma")
@@ -45,7 +42,6 @@ public class RetroClient {
 
                     okhttp3.Response response = chain.proceed(request);
                     response.cacheResponse();
-                    // Customize or return the response
                     return response;
                 })
                 .build();
@@ -61,22 +57,9 @@ public class RetroClient {
     }
 
     public void getResponse(String country,String category,String apikey, final newsApiCallback callback) {
-        apiService.getResponse(country,category,apikey).enqueue(new Callback<GetResponse>() {
-            @Override
-            public void onResponse(Call<GetResponse> call, Response<GetResponse> response) {
-                if(response.isSuccessful()){
-                    callback.onSuccess(response.code(),response.body());
-                } else {
-                    Log.d(TAG, "#### error :"+call.request().url().toString());
-                    callback.onFailure(response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<GetResponse> call, Throwable t) {
-                Log.d(TAG,"#### onFailure : "+t.getMessage());
-            }
-        });
+        apiService.getResponse(country, category, apikey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(callback::onSuccess, callback::onError);
     }
-
 }

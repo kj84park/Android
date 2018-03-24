@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import kr.kyungjoon.hansol.newssample.network.api.RetroClient;
+import kr.kyungjoon.hansol.newssample.network.RetroClient;
 
 /**
  * Created by HANSOL on 2018-03-14.

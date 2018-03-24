@@ -8,7 +8,7 @@ public interface newsApiCallback<T> {
 
     void onError(Throwable t);
 
-    void onSuccess(int code, T receivedData);
+    void onSuccess(T receivedData);
 
     void onFailure(int code);
 }

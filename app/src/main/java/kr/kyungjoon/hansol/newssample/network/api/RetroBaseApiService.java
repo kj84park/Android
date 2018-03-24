@@ -1,7 +1,7 @@
 package kr.kyungjoon.hansol.newssample.network.api;
 
+import io.reactivex.Observable;
 import kr.kyungjoon.hansol.newssample.network.dto.GetResponse;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -14,5 +14,5 @@ public interface RetroBaseApiService {
     public final String BaseUrl = "https://newsapi.org/";
 
    @GET("/v2/top-headlines")
-    Call<GetResponse> getResponse(@Query("country") String country,@Query("category") String category,@Query("apiKey") String apiKey);
+   Observable<GetResponse> getResponse(@Query("country") String country, @Query("category") String category, @Query("apiKey") String apiKey);
 }

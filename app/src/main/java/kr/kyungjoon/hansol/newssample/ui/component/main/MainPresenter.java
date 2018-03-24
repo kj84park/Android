@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import javax.inject.Inject;
 
 import kr.kyungjoon.hansol.newssample.di.MainComponent;
-import kr.kyungjoon.hansol.newssample.network.api.RetroClient;
+import kr.kyungjoon.hansol.newssample.network.RetroClient;
 import kr.kyungjoon.hansol.newssample.network.dto.GetResponse;
 import kr.kyungjoon.hansol.newssample.network.listener.newsApiCallback;
 
@@ -80,10 +80,12 @@ public class MainPresenter {
             }
 
             @Override
-            public void onSuccess(int code, Object receivedData) {
+            public void onSuccess(Object receivedData) {
                 GetResponse response = (GetResponse) receivedData;
-                view.initRecyclerView(response.getArticles());
-                view.setProgressBarVisibility(View.GONE);
+                if(response != null) {
+                    view.initRecyclerView(response.getArticles());
+                    view.setProgressBarVisibility(View.GONE);
+                }
             }
 
             @Override
