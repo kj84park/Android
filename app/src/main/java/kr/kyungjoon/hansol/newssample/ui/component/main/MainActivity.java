@@ -9,8 +9,6 @@ import android.widget.Spinner;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.kyungjoon.hansol.newssample.R;
@@ -18,16 +16,11 @@ import kr.kyungjoon.hansol.newssample.network.dto.Articles;
 import kr.kyungjoon.hansol.newssample.ui.component.Base;
 import kr.kyungjoon.hansol.newssample.ui.component.details.DetailedActivity;
 import kr.kyungjoon.hansol.newssample.ui.listener.RecyclerItemListener;
-import retrofit2.Retrofit;
 
 public class MainActivity extends Base implements MainView {
 
     public static final String API_KEY = "04871c167cfb4a3c9c18b9d170d8ba7f";
     public final String TAG = MainActivity.class.getName();
-
-    @Inject
-    Retrofit retrofit;
-    private MainPresenter mainPresenter;
 
     @BindView(R.id.news_list)
     RecyclerView recyclerView;
@@ -48,9 +41,7 @@ public class MainActivity extends Base implements MainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        getMainComponent().inject(this);
-        mainPresenter = new MainPresenter(this);
+        new MainPresenter(this,getMainComponent());
     }
 
     private final RecyclerItemListener recyclerItemListener = position -> {

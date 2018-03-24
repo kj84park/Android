@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import kr.kyungjoon.hansol.newssample.di.DaggerMainComponent;
-import kr.kyungjoon.hansol.newssample.di.MainComponent;
 import kr.kyungjoon.hansol.newssample.di.MainModule;
+import kr.kyungjoon.hansol.newssample.di.MainComponent;
 
 public class Base extends AppCompatActivity {
 
@@ -20,4 +20,5 @@ public class Base extends AppCompatActivity {
     public MainComponent getMainComponent() {
         return mainComponent;
     }
+
 }

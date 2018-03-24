@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.kyungjoon.hansol.newssample.R;
@@ -20,7 +17,7 @@ import kr.kyungjoon.hansol.newssample.network.dto.Articles;
  * Created by HANSOL on 2018-03-18.
  */
 
-public class MainViewHoler extends RecyclerView.ViewHolder {
+class MainViewHoler extends RecyclerView.ViewHolder {
 
     @BindView(R.id.tv_caption)
     TextView tvCaption;
@@ -33,13 +30,13 @@ public class MainViewHoler extends RecyclerView.ViewHolder {
 
     View itemView;
 
-    public MainViewHoler(View itemView) {
+    MainViewHoler(View itemView) {
         super(itemView);
         this.itemView = itemView;
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(int position, Articles articles) {
+    void bind(int position, Articles articles) {
 
         tvTitle.setText("[" + articles.getSource().getName() + "]" + articles.getTitle());
 

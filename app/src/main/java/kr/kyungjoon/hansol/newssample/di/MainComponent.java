@@ -3,7 +3,7 @@ package kr.kyungjoon.hansol.newssample.di;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import kr.kyungjoon.hansol.newssample.ui.component.main.MainView;
+import kr.kyungjoon.hansol.newssample.ui.component.main.MainPresenter;
 
 /**
  * Created by HANSOL on 2018-03-14.
@@ -11,5 +11,5 @@ import kr.kyungjoon.hansol.newssample.ui.component.main.MainView;
 @Singleton
 @Component(modules = MainModule.class)
 public interface MainComponent {
-    void inject(MainView activity);
+    void inject(MainPresenter presenter);
 }

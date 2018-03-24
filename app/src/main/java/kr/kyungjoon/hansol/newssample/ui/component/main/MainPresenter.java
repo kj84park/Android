@@ -1,8 +1,12 @@
 package kr.kyungjoon.hansol.newssample.ui.component.main;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
+import javax.inject.Inject;
+
+import kr.kyungjoon.hansol.newssample.di.MainComponent;
 import kr.kyungjoon.hansol.newssample.network.api.RetroClient;
 import kr.kyungjoon.hansol.newssample.network.dto.GetResponse;
 import kr.kyungjoon.hansol.newssample.network.listener.newsApiCallback;
@@ -11,21 +15,24 @@ import kr.kyungjoon.hansol.newssample.network.listener.newsApiCallback;
  * Created by HANSOL on 2018-03-13.
  */
 
-class MainPresenter {
+public class MainPresenter {
 
     private final MainView view;
-    private RetroClient retro;
+
+    @Inject
+    public RetroClient retro;
 
     private String country;
     private String category;
 
-    MainPresenter(MainView view) {
+    MainPresenter(MainView view, MainComponent mainComponent) {
         this.view = view;
+        mainComponent.inject(this);
         init();
     }
 
     private void init() {
-        retro = RetroClient.getInstance().createBaseApi();
+
         country = "kr";
         category = null;
 
@@ -43,6 +50,7 @@ class MainPresenter {
         });
 
         view.getSpinnerCategory().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 category = (String) parent.getItemAtPosition(position);
@@ -57,11 +65,14 @@ class MainPresenter {
                 category = null;
             }
         });
-
         getNews();
     }
 
     private void getNews() {
+
+        if(retro == null){
+            Log.d("###","retro  is null");
+        }
         retro.getResponse(country, category, MainActivity.API_KEY, new newsApiCallback() {
             @Override
             public void onError(Throwable t) {
@@ -73,7 +84,6 @@ class MainPresenter {
                 GetResponse response = (GetResponse) receivedData;
                 view.initRecyclerView(response.getArticles());
                 view.setProgressBarVisibility(View.GONE);
-
             }
 
             @Override
