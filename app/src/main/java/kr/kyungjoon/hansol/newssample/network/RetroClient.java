@@ -21,7 +21,7 @@ public class RetroClient {
     private RetroBaseApiService apiService;
     private Retrofit retrofit;
 
-    private static String baseUrl = RetroBaseApiService.BaseUrl;
+    private static String baseUrl = RetroBaseApiService.baseUrl;
 
     private <T> T create(final Class<T> service) {
         if (service == null) {

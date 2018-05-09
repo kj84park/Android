@@ -1,8 +1,8 @@
 ext {
 
     minSdkVersion = 23
-    compileSdkVersion = 26
-    targetSdkVersion = 26
+    compileSdkVersion = 'android-P'
+    targetSdkVersion = 27
 
     buildToolsVersion = '25.0.2'
     supportLibraryVersion = '25.1.1'
@@ -11,6 +11,6 @@ ext {
     espressoVersion = '2.2.2'
     retrofitVersion = '2.2.0'
     okhttpVersion = '3.3.0'
-    butterKnifeVersion = '8.5.1'
+    butterKnifeVersion = '9.0.0-SNAPSHOT'
     mockitoVersion = '2.7.1'
 }

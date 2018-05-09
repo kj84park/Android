@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface RetroBaseApiService {
 
-    public final String BaseUrl = "https://newsapi.org/";
+    public final String baseUrl = "https://newsapi.org/";
 
    @GET("/v2/top-headlines")
    Observable<GetResponse> getResponse(@Query("country") String country, @Query("category") String category, @Query("apiKey") String apiKey);
