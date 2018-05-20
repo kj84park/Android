@@ -41,19 +41,19 @@ dependencies {
 
     implementation "com.google.dagger:dagger:${daggerVersion}"
     annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
-    provided 'javax.annotation:jsr250-api:1.0'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
+    provided  'javax.annotation:jsr250-api:1.0'
+    provided  'org.glassfish:javax.annotation:10.0-b28'
 
-    api "com.jakewharton:butterknife:${butterKnifeVersion}"
+    implementation "com.jakewharton:butterknife:${butterKnifeVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
 
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
     implementation "com.squareup.okhttp3:okhttp:${okhttpVersion}"
 
-    compile 'io.reactivex.rxjava2:rxjava:2.1.8'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.bumptech.glide:glide:4.5.0'
