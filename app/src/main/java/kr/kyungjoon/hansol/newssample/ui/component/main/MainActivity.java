@@ -19,8 +19,7 @@ import kr.kyungjoon.hansol.newssample.ui.listener.RecyclerItemListener;
 
 public class MainActivity extends Base implements MainView {
 
-    public static final String API_KEY = "04871c167cfb4a3c9c18b9d170d8ba7f";
-    public final String TAG = MainActivity.class.getName();
+    private final String TAG = MainActivity.class.getName();
 
     @BindView(R.id.news_list)
     RecyclerView recyclerView;

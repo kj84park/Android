@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 
 import javax.inject.Inject;
 
+import kr.kyungjoon.hansol.newssample.common.Constants;
 import kr.kyungjoon.hansol.newssample.di.MainComponent;
 import kr.kyungjoon.hansol.newssample.network.RetroClient;
 import kr.kyungjoon.hansol.newssample.network.dto.GetResponse;
@@ -20,7 +21,7 @@ public class MainPresenter {
     private final MainView view;
 
     @Inject
-    public RetroClient retro;
+    private RetroClient retro;
 
     private String country;
     private String category;
@@ -73,7 +74,7 @@ public class MainPresenter {
         if(retro == null){
             Log.d("###","retro  is null");
         }
-        retro.getResponse(country, category, MainActivity.API_KEY, new newsApiCallback() {
+        retro.getResponse(country, category, Constants.API_KEY, new newsApiCallback() {
             @Override
             public void onError(Throwable t) {
 

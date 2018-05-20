@@ -9,13 +9,13 @@ import java.io.Serializable;
 
 public class Articles implements Serializable{
 
-    public final String author;
-    public final String title;
-    public final String description;
-    public final String url;
-    public final String urlToImage;
-    public final String publishedAt;
-    public final Source source;
+    private final String author;
+    private final String title;
+    private final String description;
+    private final String url;
+    private final String urlToImage;
+    private final String publishedAt;
+    private final Source source;
 
     public Articles(String author, String title, String description, String url, String urlToImage, String publishedAt, Source source) {
         this.author = author;

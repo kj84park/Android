@@ -20,13 +20,13 @@ import kr.kyungjoon.hansol.newssample.network.dto.Articles;
 class MainViewHoler extends RecyclerView.ViewHolder {
 
     @BindView(R.id.tv_caption)
-    TextView tvCaption;
+    private TextView tvCaption;
     @BindView(R.id.tv_title)
-    TextView tvTitle;
+    private TextView tvTitle;
     @BindView(R.id.rl_news_item)
-    RelativeLayout newsItemLayout;
+    private RelativeLayout newsItemLayout;
     @BindView(R.id.news_image)
-    ImageView newsImage;
+    private ImageView newsImage;
 
     View itemView;
 

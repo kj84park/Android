@@ -17,7 +17,7 @@ import kr.kyungjoon.hansol.newssample.network.dto.Articles;
 
 public class MainViewAdapter extends  RecyclerView.Adapter<MainViewHoler>{
 
-    public final String TAG = MainViewAdapter.class.getName();
+    private final String TAG = MainViewAdapter.class.getName();
     private RecyclerItemListener recyclerItemListener;
 
     private final List<Articles> news;

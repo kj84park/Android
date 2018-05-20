@@ -8,9 +8,9 @@ import java.util.List;
 
 public class GetResponse {
 
-    public final List<Articles> articles;
-    public final String status;
-    public final int totalResults;
+    private final List<Articles> articles;
+    private final String status;
+    private final int totalResults;
 
     public GetResponse(List<Articles> articles, String status, int totalResults) {
         this.articles = articles;
